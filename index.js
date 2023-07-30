@@ -7,7 +7,7 @@ const token = process.env.TOKEN;
 const mytoken = process.env.MYTOKEN;
 
 const app = express().use(body_parser.json());
-
+//Whatsapp will use this get request to verify your webhook.
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let challenge = req.query["hub.challenge"];
@@ -23,7 +23,7 @@ app.get("/webhook", (req, res) => {
     }
   }
 });
-
+//After that Whatsapp will use this psot requestto send the payload. In each chat scroll also.
 app.post("/webhook", (req, res) => {
   let body_param = req.body;
   // Define a flag to track if the message has been sent
@@ -64,6 +64,7 @@ app.post("/webhook", (req, res) => {
         console.log("Error in response parsing");
       }
       if (msg_body === "Hii" || msg_body==="hii" || msg_body=="Hi") {
+        //Interactive button message with two buttons.
         axios({
           method: "post",
           url:
@@ -159,6 +160,7 @@ function sendMessage(to, text, token) {
 }
 
 function show_list(from, token,messageSent,res) {
+  //For showing list message.
   if (messageSent) {
     return;
   }
